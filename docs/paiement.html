@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paiement — Ivass EM</title>
+<link rel="icon" href="icone-192.png">
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#16212c;--mute:#5f6c7a;--ok:#1e8e4e;--ko:#c2352b;--wa:#a8670a;--pri:#1F3B8C}
+@media (prefers-color-scheme:dark){:root{--bg:#0f151c;--card:#1a232e;--ink:#e8edf2;--mute:#a9b6c3;--ok:#5fd38d;--ko:#ff8a80;--wa:#ffc86b;--pri:#3d6fa8}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.box{max-width:440px;margin:0 auto;padding:40px 16px;text-align:center}
+.card{background:var(--card);border-radius:16px;padding:24px 18px;box-shadow:0 2px 12px #0001}
+img{width:84px;height:84px;border-radius:18px}h1{font-size:22px;margin:14px 0 6px}p{color:var(--mute)}
+a.btn{display:block;background:var(--pri);color:#fff;text-decoration:none;border-radius:12px;padding:15px;font-weight:700;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="box"><div class="card">
+ <img src="icone-192.png" alt="">
+ <h1 id="t">Paiement</h1>
+ <p id="m"></p>
+ <a class="btn" id="go" href="./">Retourner dans l'application</a>
+</div></div>
+<script>
+const q = new URLSearchParams(location.search), st = q.get('statut') || 'echec', src = q.get('src') || 'web', msg = q.get('m') || '';
+const T = { ok: ['✅ Paiement validé', 'Ton abonnement est actif. L\'application se débloque automatiquement. Un e-mail de confirmation t\'a été envoyé, et il est aussi conservé dans ton compte.'],
+            annule: ['Paiement annulé', 'Aucun montant n\'a été prélevé.'],
+            echec: ['❌ Paiement non validé', 'Si tu as été débité, contacte le support avec ta référence PayPal.'] }[st] || ['Paiement', ''];
+document.getElementById('t').textContent = T[0];
+document.getElementById('m').textContent = T[1] + (msg && st !== 'ok' ? ' (' + msg + ')' : '');
+const go = document.getElementById('go');
+if (src === 'app') {
+  go.href = 'intent://paiement?statut=' + encodeURIComponent(st) + '&m=' + encodeURIComponent(msg) + '#Intent;scheme=ivassem;package=com.ivassem.interventions;end';
+  go.textContent = 'Retourner dans l\'application';
+} else {
+  go.href = './?paiement=' + encodeURIComponent(st) + '&m=' + encodeURIComponent(msg);
+  setTimeout(() => location.replace(go.href), 1800);
+}
+</script>
+</body>
+</html>
