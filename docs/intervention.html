@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Intervention — Ivass EM</title>
+<link rel="icon" href="icone-192.png">
+<style>
+:root{--bg:#f3f5f8;--card:#fff;--ink:#16212c;--mute:#5f6c7a;--line:#dfe4ea;--pri:#1F3B8C;--ok:#1e8e4e;--okbg:#e3f5ea;--ko:#c2352b;--kobg:#fde8e6;--wa:#a8670a;--wabg:#fff3dc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f151c;--card:#1a232e;--ink:#e8edf2;--mute:#a9b6c3;--line:#2c3a48;--okbg:#173524;--kobg:#3d1b18;--wabg:#3a2c12}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--pri);color:#fff;padding:14px 16px;display:flex;gap:12px;align-items:center}
+header img{width:44px;height:44px;border-radius:10px}header h1{margin:0;font-size:18px}header small{opacity:.8}
+main{max-width:900px;margin:0 auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+table{width:100%;border-collapse:collapse}th,td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top;text-align:start}
+th{width:36%;color:var(--mute);font-weight:600}td{white-space:pre-wrap;word-break:break-word}
+.pill{display:inline-block;padding:2px 10px;border-radius:99px;font-size:12.5px;font-weight:700}
+.ok{background:var(--okbg);color:var(--ok)}.ko{background:var(--kobg);color:var(--ko)}.wa{background:var(--wabg);color:var(--wa)}
+.btn{display:inline-block;background:var(--pri);color:#fff;border:0;border-radius:9px;padding:10px 14px;font:600 14px system-ui;cursor:pointer;text-decoration:none}
+.btn.sec{background:transparent;color:var(--pri);border:1px solid var(--line)}
+figure{margin:0 0 16px}figure img{max-width:100%;border:1px solid var(--line);border-radius:10px}figcaption{font-size:12.5px;color:var(--mute)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+</style>
+</head>
+<body>
+<header><img src="icone-192.png" alt=""><div><h1 id="titre">Intervention</h1><small id="sous">Ivass EM — lien de récupération</small></div></header>
+<main id="contenu"><div class="card">Chargement…</div></main>
+<script>
+const SERVEUR = { url: 'https://naainfzbcyjkpsyyelam.supabase.co', cle: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYWluZnpiY3lqa3BzeXllbGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNjEwODksImV4cCI6MjEwNzczNzA4OX0.CAgy-m-oE15Z3CEri1tfSPEFwRJN-hUQTbS3eNZUTRM' };
+const LIB = { eps: 'N° EPS', date: 'Date', heureDebut: 'Début', heureFin: 'Fin', client: 'Client', type: 'Type', modeRacc: 'Mode de raccordement', prestation: 'Prestation', statut: 'Statut',
+  adresse: 'Adresse', commune: 'Commune', complement: "Complément d'adresse", pto: 'Référence PTO', imb: 'IMB', localisation: 'Localisation', telephone: 'Téléphone', motif: 'Motif SAV',
+  statutFS: 'Statut Field Service', statutTecnow: 'Statut TecNow', motifCloture: 'Motif de clôture', sources: 'Vue dans', priorite: 'Priorité', passages: 'Passages', creneau: 'Créneau client',
+  pm: 'Réf. PM', offre: 'Offre', contact: 'Contact sur place', app: 'Application', creeLe: 'Créée le', majLe: 'Modifiée le', clotureLe: 'Clôturée le' };
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const frD = d => d ? String(d).slice(0, 10).split('-').reverse().join('/') : '—';
+const box = document.getElementById('contenu');
+(async () => {
+  const t = new URLSearchParams(location.search).get('t') || '';
+  try {
+    const r = await fetch(SERVEUR.url + '/functions/v1/partage', { method: 'POST', headers: { apikey: SERVEUR.cle, 'Content-Type': 'application/json' }, body: JSON.stringify({ t }) });
+    const j = await r.json();
+    if (!r.ok) throw new Error(j.erreur || 'Lien invalide');
+    const d = j.donnees || {};
+    const s = String(d.statut || '').toUpperCase(), clo = /KO|ECHEC/.test(s) ? ['ko', 'Clôture KO'] : /OK|TERMINE/.test(s) ? ['ok', 'Clôture OK'] : ['wa', s || 'En cours'];
+    document.getElementById('titre').textContent = j.eps;
+    document.getElementById('sous').textContent = (j.entreprise ? j.entreprise + ' · ' : '') + 'technicien : ' + (j.technicien || '—');
+    document.title = j.eps + ' — Ivass EM';
+    const cles = [...Object.keys(LIB), ...Object.keys(d)].filter((k, i, a) => a.indexOf(k) === i && d[k] !== undefined && d[k] !== null && d[k] !== '');
+    box.innerHTML = `<div class="card"><div class="row" style="justify-content:space-between"><span class="pill ${clo[0]}">${esc(clo[1])}</span>
+       <div class="row"><button class="btn" id="dJson">⬇️ Données</button>${(j.images || []).length ? '<button class="btn sec" id="dImg">⬇️ Images</button>' : ''}</div></div>
+       <p style="color:var(--mute);font-size:13px;margin:8px 0 0">Reçue le ${frD(j.recu_le)} · mise à jour le ${frD(j.maj_le)} ${esc(String(j.maj_le || '').slice(11, 16))} · les images restent accessibles 1 heure après l'ouverture de la page.</p></div>
+      <div class="card"><table>${cles.map(k => `<tr><th>${esc(LIB[k] || k)}</th><td>${esc(typeof d[k] === 'object' ? JSON.stringify(d[k]) : d[k])}</td></tr>`).join('')}</table></div>
+      ${(j.images || []).length ? `<div class="card"><h2 style="font-size:16px;margin-top:0">📷 Captures d'origine</h2>${j.images.map(im => `<figure><a href="${esc(im.url)}" target="_blank" rel="noopener"><img src="${esc(im.url)}" alt="${esc(im.nom)}"></a><figcaption>${esc(im.nom)}${im.taille ? ' · ' + (im.taille / 1048576).toFixed(2) + ' Mo' : ''}</figcaption></figure>`).join('')}</div>` : ''}`;
+    const dl = (blob, nom) => { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nom; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); };
+    document.getElementById('dJson').onclick = () => dl(new Blob([JSON.stringify({ eps: j.eps, entreprise: j.entreprise, technicien: j.technicien, recu_le: j.recu_le, maj_le: j.maj_le, donnees: d }, null, 2)], { type: 'application/json' }), j.eps + '.json');
+    const bi = document.getElementById('dImg');
+    if (bi) bi.onclick = async () => { for (const im of j.images) { try { dl(await (await fetch(im.url)).blob(), j.eps + '_' + im.nom); await new Promise(r => setTimeout(r, 400)); } catch (e) {} } };
+  } catch (e) {
+    box.innerHTML = `<div class="card"><h2 style="margin-top:0">❌ ${esc(e.message)}</h2><p style="color:var(--mute)">Demande un nouveau lien à l'entreprise qui te l'a envoyé.</p></div>`;
+  }
+})();
+</script>
+</body>
+</html>
