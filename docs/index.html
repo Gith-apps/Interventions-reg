@@ -860,7 +860,7 @@ async function dbInfo() { const pr = await DB.all('preuves'); $('#dbInfo').textC
 
 <script>
 // Remplacé à la compilation (édition, serveur, adresse de l'appli web) — ne pas modifier la forme de cette ligne
-const CONFIG = {"edition": "public", "url": "https://naainfzbcyjkpsyyelam.supabase.co", "cle": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYWluZnpiY3lqa3BzeXllbGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNjEwODksImV4cCI6MjEwNzczNzA4OX0.CAgy-m-oE15Z3CEri1tfSPEFwRJN-hUQTbS3eNZUTRM", "web": "https://gith-apps.github.io/Interventions-reg/", "depot": "Gith-apps/Interventions-reg", "version": "9.3"}; //CONFIG-FIN
+const CONFIG = {"edition": "public", "url": "https://naainfzbcyjkpsyyelam.supabase.co", "cle": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5hYWluZnpiY3lqa3BzeXllbGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIxNjEwODksImV4cCI6MjEwNzczNzA4OX0.CAgy-m-oE15Z3CEri1tfSPEFwRJN-hUQTbS3eNZUTRM", "web": "https://gith-apps.github.io/Interventions-reg/", "depot": "Gith-apps/Interventions-reg", "version": "9.4"}; //CONFIG-FIN
 const PUBLIC = CONFIG.edition === 'public';
 const SERVEUR = !!(CONFIG.url && CONFIG.cle);
 const PRIVATE_KEYS = ['telephone', 'adresse', 'complement', 'localisation', 'adressePM', 'imb', 'contact', 'creneau', 'offre'];
@@ -872,14 +872,14 @@ const TR = {
  en: {'📷 Captures':'📷 Screenshots','📑 Interventions':'📑 Jobs','⚖️ Comparaison':'⚖️ Comparison','💶 Tarifs':'💶 Rates','💾 Données':'💾 Data','⚙️ Paramètres':'⚙️ Settings','👤 Compte':'👤 Account','👑 Administration':'👑 Admin',
   'Paramètres':'Settings','Compte':'Account','Sécurité et confidentialité':'Security and privacy','Général':'General','Langue':'Language','Outils':'Tools','Affichage':'Display','Thème':'Theme','Taille du texte':'Text size','Édition':'Edit','Annuler':'Undo','Rétablir':'Redo','Rechercher':'Search','Aide':'Help','Fichiers':'Files','Importer':'Import','Exporter':'Export','Traduire':'Translate','Imprimer':'Print',
   'Code de verrouillage':'Lock code','Effacer toutes les données':'Erase all data','Conditions et confidentialité':'Terms and privacy','Bientôt disponible':'Coming soon','Application verrouillée':'App locked','Déverrouiller':'Unlock',
-  'Se connecter':'Sign in','Créer un compte':'Create account','Mot de passe oublié ?':'Forgot password?','Adresse e-mail':'E-mail address','Mot de passe (8 caractères min.)':'Password (8 characters min.)','Nom ou pseudo':'Name or nickname',
+  'Se connecter':'Sign in','Créer un compte':'Create account','ou':'or','Continuer avec Google':'Continue with Google','Mot de passe oublié ?':'Forgot password?','Adresse e-mail':'E-mail address','Mot de passe (8 caractères min.)':'Password (8 characters min.)','Nom ou pseudo':'Name or nickname',
   'Choisir une formule':'Choose a plan','Payer avec PayPal':'Pay with PayPal','Mes messages':'My messages','Mes paiements':'My payments','Se déconnecter':'Sign out','Mon compte':'My account','Actualiser':'Refresh',
   'Clair':'Light','Sombre':'Dark','Automatique':'Automatic','Petit':'Small','Normal':'Normal','Grand':'Large','Très grand':'Extra large','Rien à annuler':'Nothing to undo','Rien à rétablir':'Nothing to redo',
   'Guide d\'utilisation':'User guide','Version':'Version','Confirmer':'Confirm','Code reçu par e-mail':'Code received by e-mail','Renvoyer le code':'Send code again','Retour':'Back'},
  ar: {'📷 Captures':'📷 اللقطات','📑 Interventions':'📑 التدخلات','⚖️ Comparaison':'⚖️ المقارنة','💶 Tarifs':'💶 الأسعار','💾 Données':'💾 البيانات','⚙️ Paramètres':'⚙️ الإعدادات','👤 Compte':'👤 الحساب','👑 Administration':'👑 الإدارة',
   'Paramètres':'الإعدادات','Compte':'الحساب','Sécurité et confidentialité':'الأمان والخصوصية','Général':'عام','Langue':'اللغة','Outils':'الأدوات','Affichage':'العرض','Thème':'المظهر','Taille du texte':'حجم النص','Édition':'التحرير','Annuler':'تراجع','Rétablir':'إعادة','Rechercher':'بحث','Aide':'المساعدة','Fichiers':'الملفات','Importer':'استيراد','Exporter':'تصدير','Traduire':'ترجمة','Imprimer':'طباعة',
   'Code de verrouillage':'رمز القفل','Effacer toutes les données':'مسح كل البيانات','Conditions et confidentialité':'الشروط والخصوصية','Bientôt disponible':'قريبًا','Application verrouillée':'التطبيق مقفل','Déverrouiller':'فتح القفل',
-  'Se connecter':'تسجيل الدخول','Créer un compte':'إنشاء حساب','Mot de passe oublié ?':'نسيت كلمة المرور؟','Adresse e-mail':'البريد الإلكتروني','Mot de passe (8 caractères min.)':'كلمة المرور (8 أحرف على الأقل)','Nom ou pseudo':'الاسم أو الاسم المستعار',
+  'Se connecter':'تسجيل الدخول','Créer un compte':'إنشاء حساب','ou':'أو','Continuer avec Google':'المتابعة باستخدام Google','Mot de passe oublié ?':'نسيت كلمة المرور؟','Adresse e-mail':'البريد الإلكتروني','Mot de passe (8 caractères min.)':'كلمة المرور (8 أحرف على الأقل)','Nom ou pseudo':'الاسم أو الاسم المستعار',
   'Choisir une formule':'اختيار باقة','Payer avec PayPal':'الدفع عبر PayPal','Mes messages':'رسائلي','Mes paiements':'مدفوعاتي','Se déconnecter':'تسجيل الخروج','Mon compte':'حسابي','Actualiser':'تحديث',
   'Clair':'فاتح','Sombre':'داكن','Automatique':'تلقائي','Petit':'صغير','Normal':'عادي','Grand':'كبير','Très grand':'كبير جدًا','Rien à annuler':'لا شيء للتراجع عنه','Rien à rétablir':'لا شيء لإعادته',
   'Guide d\'utilisation':'دليل الاستخدام','Version':'الإصدار','Confirmer':'تأكيد','Code reçu par e-mail':'الرمز المستلم بالبريد','Renvoyer le code':'إعادة إرسال الرمز','Retour':'رجوع'}
@@ -1076,8 +1076,16 @@ function formConnexion(box, titre, sousTitre, apres) {
       <label class="f">${T('Adresse e-mail')}<input id="cMail" type="email" autocomplete="email"></label><br>
       <label class="f">${T('Mot de passe (8 caractères min.)')}<input id="cMdp" type="password" autocomplete="${mode === 'inscription' ? 'new-password' : 'current-password'}"></label>
       <div class="row" style="margin-top:12px"><button class="btn big" id="cGo" style="flex:1">${mode === 'inscription' ? '✅ ' + T('Créer un compte') : '🔐 ' + T('Se connecter')}</button></div>
+      ${PUBLIC ? `<p style="text-align:center;color:var(--mute);margin:12px 0 8px">— ${T('ou')} —</p><div class="row"><button class="btn sec" id="cGoogle" style="flex:1">${T('Continuer avec Google')}</button></div>` : ''}
       ${mode === 'connexion' ? `<p style="text-align:center"><a href="#" id="cOubli">${T('Mot de passe oublié ?')}</a></p>` : '<p class="hint" style="margin-top:10px">7 jours d\'essai gratuit, sans moyen de paiement.</p>'}</div>`;
     $('#tCo').onclick = () => { mode = 'connexion'; dessiner(); }; $('#tIn').onclick = () => { mode = 'inscription'; dessiner(); };
+    { const g = $('#cGoogle'); if (g) g.onclick = async () => {
+      g.disabled = true;
+      try { const sb = await serveur();
+        const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.href.split('#')[0] } });
+        if (error) throw error;   // sinon le navigateur part vers Google puis revient connecté
+      } catch (e) { toast('❌ ' + TRAD_ERR(e.message)); g.disabled = false; }
+    }; }
     $('#cGo').onclick = async () => {
       const email = $('#cMail').value.trim(), mdp = $('#cMdp').value;
       if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return toast('Adresse e-mail invalide');
